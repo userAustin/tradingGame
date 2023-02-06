@@ -6,7 +6,7 @@ int main() {
 	//Vars
 	sf::RenderWindow window(sf::VideoMode(600,600), "Trading Game");
 	sf::Event event;
-
+	int timer = 0;
 
 	// ###### WINDOW LOOP #########
 	while (window.isOpen()) {
@@ -20,6 +20,11 @@ int main() {
 
 
 		//## Update ##
+		timer++;
+		if (timer == 10000) {
+			std::cout << "Got'eem" << std::endl;
+			timer = 0;
+		}
 
 
 		//## Render ##
