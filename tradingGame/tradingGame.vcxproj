@@ -130,7 +130,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Colliders.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Port.cpp" />
+    <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Colliders.h" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Port.h" />
+    <ClInclude Include="Ship.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,15 +1,37 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "Ship.h"
+/*
+############	Possible Memory Leaks	###########
 
+>	Ship.cpp, many functions allocate new Ship States, and if they are not properly destroyed
+			  in the Ship class' SetState() function there may be a leak
+
+>
+
+
+
+*/
 
 int main() {
 	//Vars
 	sf::RenderWindow window(sf::VideoMode(600,600), "Trading Game");
 	sf::Event event;
-	int timer = 0;
+	sf::Clock frameClock;
+	float deltaTime = 0;
+
+	sf::Texture circleTexture;
+	circleTexture.loadFromFile("Textures/testCircle.png");
+
+	Ship testShip;
+	testShip.SetTexture(&circleTexture);
 
 	// ###### WINDOW LOOP #########
 	while (window.isOpen()) {
+
+		//Update deltaTime
+		deltaTime = frameClock.getElapsedTime().asSeconds();
+		frameClock.restart();
 
 		//## Event Loop ##
 		while (window.pollEvent(event)) {
@@ -20,17 +42,14 @@ int main() {
 
 
 		//## Update ##
-		timer++;
-		if (timer == 10000) {
-			std::cout << "Got'eem" << std::endl;
-			timer = 0;
-		}
+		testShip.Update(deltaTime);
 
 
 		//## Render ##
 		window.clear();
 
 			//Draw
+		testShip.Draw(window);
 
 		window.display();
 
