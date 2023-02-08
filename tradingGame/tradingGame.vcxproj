@@ -136,6 +136,7 @@
     <ClCompile Include="Port.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colliders.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Port.h" />
     <ClInclude Include="Ship.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,13 +1,16 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Ship.h"
+#include "World.h"
+
 /*
 ############	Possible Memory Leaks	###########
 
 >	Ship.cpp, many functions allocate new Ship States, and if they are not properly destroyed
-			  in the Ship class' SetState() function there may be a leak
+			  in the Ship class' SetState() function there may be a leak.
 
->
+>	World.cpp, When reading world from file a vector of vectors of pointers is allocated. If
+	not properly destroyed in ~World() a memory leak may result.
 
 
 
@@ -20,11 +23,23 @@ int main() {
 	sf::Clock frameClock;
 	float deltaTime = 0;
 
-	sf::Texture circleTexture;
-	circleTexture.loadFromFile("Textures/testCircle.png");
+	//Texture Atlas Setup
+	sf::Texture red, green, blue;
 
-	Ship testShip;
-	testShip.SetTexture(&circleTexture);
+	red.loadFromFile("Textures/red32.png");
+	green.loadFromFile("Textures/green32.png");
+	blue.loadFromFile("Textures/blue32.png");
+
+	std::vector<sf::Texture*> testAtlas;
+	testAtlas.push_back(&red);
+	testAtlas.push_back(&green);
+	testAtlas.push_back(&blue);
+
+	//World Setup
+	World testWorld;
+	testWorld.SetTextureAtlas(testAtlas);
+	testWorld.ReadFromFile("world_tst.txt");
+
 
 	// ###### WINDOW LOOP #########
 	while (window.isOpen()) {
@@ -42,14 +57,14 @@ int main() {
 
 
 		//## Update ##
-		testShip.Update(deltaTime);
+		
 
 
 		//## Render ##
 		window.clear();
 
 			//Draw
-		testShip.Draw(window);
+		testWorld.Draw(window);
 
 		window.display();
 
