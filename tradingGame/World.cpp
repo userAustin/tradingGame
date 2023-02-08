@@ -30,6 +30,11 @@ void Tile::SetPos(sf::Vector2f newPos)
 	sprite.setPosition(pos);
 }
 
+sf::Texture* Tile::GetTexture()
+{
+	return texture;
+}
+
 void World::Init()
 {
 
@@ -52,9 +57,56 @@ World::~World()
 	}
 }
 
-void World::SetTextureAtlas(std::vector<sf::Texture*> newtextureAtlas)
+void World::SetTextureAtlas(std::map<int, sf::Texture*> newtextureAtlas)
 {
 	textureAtlas = newtextureAtlas;
+}
+
+void World::WriteToFile(std::string filename)
+{
+	std::ofstream outFile;
+	outFile.open(filename);
+
+	//Check if opened
+	if (!outFile) {
+		std::cout << "Could not open world file to write: " << filename << std::endl;
+		//Maybe add a close file call here?
+		return;
+	}
+
+	//Output height, width, and tilesize
+	outFile << height << " " << width << std::endl << tileSize << std::endl;
+
+	//Output Tiles
+	int key = 0;
+	sf::Texture* value = nullptr;
+
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < height; j++) {
+
+			value = tileVector.at(i)->at(j)->GetTexture();
+
+			for (auto entry : textureAtlas)
+			{
+				if (entry.second == value)
+				{
+					key = entry.first;
+					break;    // Exit from the loop.
+				}
+			}
+			if (j == width - 1) {
+				outFile << key << std::endl;
+			}
+			else {
+				outFile << key << " ";
+			}
+		}
+	}
+
+
+	//Close the file
+	outFile.close();
+
 }
 
 void World::ReadFromFile(std::string filename)

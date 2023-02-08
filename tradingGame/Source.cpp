@@ -30,15 +30,18 @@ int main() {
 	green.loadFromFile("Textures/green32.png");
 	blue.loadFromFile("Textures/blue32.png");
 
-	std::vector<sf::Texture*> testAtlas;
-	testAtlas.push_back(&red);
-	testAtlas.push_back(&green);
-	testAtlas.push_back(&blue);
+	std::map<int, sf::Texture*> testAtlas;
+	//std::pair<char,int>('a',100)
+	testAtlas.insert(std::pair<int, sf::Texture*>(0, &red));
+	testAtlas.insert(std::pair<int, sf::Texture*>(1, &green));
+	testAtlas.insert(std::pair<int, sf::Texture*>(2, &blue));
 
 	//World Setup
 	World testWorld;
 	testWorld.SetTextureAtlas(testAtlas);
 	testWorld.ReadFromFile("world_tst.txt");
+
+	testWorld.WriteToFile("world_tstOut.txt");
 
 
 	// ###### WINDOW LOOP #########

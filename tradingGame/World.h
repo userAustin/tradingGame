@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include <map>
 #include <vector>
 #include <SFML/Graphics.hpp>
 
@@ -34,13 +35,15 @@ public:
 	void SetTexture(sf::Texture* newTexture);
 	void SetPos(sf::Vector2f newPos);
 
+	sf::Texture* GetTexture();
+
 };
 
 class World
 {
 private:
 	//Data
-	std::vector<sf::Texture*> textureAtlas;
+	std::map<int, sf::Texture*> textureAtlas;
 	int height;
 	int width;
 	int tileSize; //Assumed Square
@@ -55,8 +58,9 @@ public:
 	World();
 	~World();
 	//Primary Functions
-	void SetTextureAtlas(std::vector<sf::Texture*> newtextureAtlas);
+	void SetTextureAtlas(std::map<int, sf::Texture*> newtextureAtlas);
 	void FReadtextureAtlas(std::string filename); //Low Priority
+	void WriteToFile(std::string filename);
 	void ReadFromFile(std::string filename);
 	void Update(float dt);
 	void Draw(sf::RenderWindow& window);
